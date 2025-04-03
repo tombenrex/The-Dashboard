@@ -1,23 +1,8 @@
-/*-------------------------------------
- 1. Imports
---------------------------------------*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-
-/*-------------------------------------
- 2. General Styles
---------------------------------------*/
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-/*-------------------------------------
- 2. Grid
---------------------------------------*/
 
 body {
   background-size: cover;
@@ -28,7 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
 }
 
 main {
@@ -43,7 +28,7 @@ header {
   padding: 1rem;
 }
 
-.grid-container {
+.dash-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 500px;
@@ -56,9 +41,6 @@ header {
   background-color: #ffffff8c;
 }
 
-/*-------------------------------------
- 2. 
---------------------------------------*/
 .welcome-container {
   display: flex;
   flex-direction: column;
@@ -79,7 +61,7 @@ h1 {
   background-color: transparent;
 }
 
-.rdm-bg {
+.random-bg-container {
   text-transform: capitalize;
   border-radius: 70px;
   background-color: #ffffff8c;
@@ -89,12 +71,12 @@ h1 {
   align-items: center;
 }
 
-.rdm-bg:hover {
+.random-bg-container:hover {
   transform: scale(1.02);
   background-color: #fff;
 }
 
-.time {
+.time-container {
   border-radius: 70px;
   background-color: #ffffff8c;
   padding: 1rem;
@@ -102,14 +84,42 @@ h1 {
   gap: 2rem;
 }
 
-/*-------------------------------------
- 3. Footer
---------------------------------------*/
-
 footer {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   padding: 1rem;
+}
+
+#weather-btn {
+  border: none;
+  background: none;
+  font-size: clamp(1.1rem, 2vw, 2.5rem);
+  font-family: "Poppins";
+}
+#dropdown {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+}
+#countryList {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+.country-item {
+  padding: 8px;
+  cursor: pointer;
+}
+.country-item:hover {
+  background: #f0f0f0;
+}
+#weather {
+  margin-top: 20px;
+  font-size: 20px;
 }
