@@ -77,7 +77,37 @@ bgButton.addEventListener("click", function () {
   changeBackground();
 });
 
-// Handle button clicks to get weather
-document.getElementById("weatherBtn").addEventListener("click", getWeather);
+document.addEventListener("DOMContentLoaded", () => {
+  const weatherBtn = document.getElementById("weather-btn");
+  const countrySelect = document.getElementById("countrySelect");
+  const getWeatherBtn = document.getElementById("weatherBtn");
+  const weatherDiv = document.getElementById("weather");
+
+  // Hide weather div initially
+  weatherDiv.style.display = "none";
+
+  // Step 1: Clicking "Today's Weather" hides the button and shows the select menu
+  weatherBtn.addEventListener("click", () => {
+    weatherBtn.style.display = "none"; // Hide "Today's Weather" button
+    countrySelect.style.display = "block"; // Show dropdown
+    getWeatherBtn.style.display = "block"; // Show "Get Weather" button
+  });
+
+  // Step 2: When clicking "Get Weather," it should fetch weather and update UI
+  getWeatherBtn.addEventListener("click", async () => {
+    const selectedCountry = countrySelect.value;
+    if (!selectedCountry) return;
+
+    await getWeather(); // Call the function from `weather.js`
+
+    // Hide dropdown and button after fetching
+    countrySelect.style.display = "none";
+    getWeatherBtn.style.display = "none";
+
+    // Show the weather forecast
+    weatherDiv.style.display = "block";
+    weatherBtn.style.display = "block";
+  });
+});
 
 setupTitleEditing();

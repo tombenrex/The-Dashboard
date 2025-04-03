@@ -1,3 +1,5 @@
+//weather.js
+
 let countries = [];
 
 // Fetch country list and store in an array
@@ -40,6 +42,7 @@ document.getElementById("weather-btn").addEventListener("click", function () {
 // Fetch 3-day weather forecast for selected country
 export async function getWeather() {
   const select = document.getElementById("countrySelect");
+  const weatherDiv = document.getElementById("weather");
   const countryName = select.value;
 
   const country = countries.find((c) => c.name === countryName);
@@ -57,10 +60,10 @@ export async function getWeather() {
     const data = await response.json();
     const forecast = data.daily;
 
-    let forecastHTML = "<h3>3-Day Weather Forecast</h3>";
+    let forecastHTML = `<h3>3-Day Weather Forecast for ${countryName}</h3>`;
     for (let i = 0; i < 3; i++) {
-      const date = new Date(forecast.time[i]); // Convert time to Date object
-      const dayOfWeek = date.toLocaleString("en-us", { weekday: "long" }); // Get the weekday name
+      const date = new Date(forecast.time[i]);
+      const dayOfWeek = date.toLocaleString("en-us", { weekday: "long" });
 
       const maxTemp = forecast.temperature_2m_max[i];
       const minTemp = forecast.temperature_2m_min[i];
@@ -70,17 +73,17 @@ export async function getWeather() {
       forecastHTML += `
           <div>
             <strong>${dayOfWeek}</strong><br>
-            🌡️ Max Temp: ${maxTemp}°C | Min Temp: ${minTemp}°C<br>
+            🌡️ Max: ${maxTemp}°C | Min: ${minTemp}°C<br>
             💧 Precipitation: ${precipitation} mm<br>
-            💨 Wind Speed: ${windSpeed} km/h<br>
+            💨 Wind: ${windSpeed} km/h<br>
           </div>
           <hr>
         `;
     }
 
-    document.getElementById("weather").innerHTML = forecastHTML;
+    weatherDiv.innerHTML = forecastHTML;
+    weatherDiv.style.display = "block"; // Ensure it's visible
   } catch (error) {
-    document.getElementById("weather").innerHTML =
-      "❌ Error fetching weather data.";
+    weatherDiv.innerHTML = "❌ Error fetching weather data.";
   }
 }
