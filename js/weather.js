@@ -39,7 +39,7 @@ document.getElementById("weather-btn").addEventListener("click", function () {
   });
 });
 
-// Fetch 3-day weather forecast for selected country
+// Fetch 3-day weather forecast for selected country export async function getWeather() {
 export async function getWeather() {
   const select = document.getElementById("countrySelect");
   const weatherDiv = document.getElementById("weather");
@@ -60,7 +60,7 @@ export async function getWeather() {
     const data = await response.json();
     const forecast = data.daily;
 
-    let forecastHTML = `<h3>3-Day Weather Forecast for ${countryName}</h3>`;
+    let forecastHTML = `<h3>${countryName}</h3>`;
     for (let i = 0; i < 3; i++) {
       const date = new Date(forecast.time[i]);
       const dayOfWeek = date.toLocaleString("en-us", { weekday: "long" });
