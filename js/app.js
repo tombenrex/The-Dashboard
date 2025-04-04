@@ -1,10 +1,6 @@
 // app.js
 
-import {
-  fetchCountries,
-  fetchWeather,
-  fetchBackground,
-} from "./modules/api.js";
+import { fetchBackground, fetchCountries } from "./modules/api.js";
 import { setupWeatherModule } from "./modules/weather.js";
 import { setupTitleEditing } from "./modules/ui.js";
 import { showTime } from "./modules/time.js";

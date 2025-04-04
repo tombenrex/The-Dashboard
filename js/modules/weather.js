@@ -1,5 +1,7 @@
-// weather.js
-import { fetchCountries, fetchWeather } from "./api.js";
+//weather.js
+
+import { fetchCountries, fetchWeather, fetchWeatherIcon } from "./api.js";
+
 export function setupWeatherModule() {
   const countrySelect = document.getElementById("countrySelect");
   const weatherDiv = document.getElementById("weather");
@@ -33,8 +35,8 @@ export function setupWeatherModule() {
   getWeatherButton.addEventListener("click", async () => {
     const selectedCountry = countrySelect.value;
     try {
-      const weatherData = await fetchWeather(selectedCountry);
-      displayWeatherData(weatherData, selectedCountry);
+      const forecastData = await fetchWeather(selectedCountry);
+      displayWeatherData(forecastData, selectedCountry);
       getWeatherButton.style.display = "none";
       countrySelect.style.display = "none";
       weatherToggleButton.style.display = "inline-block";
@@ -42,26 +44,56 @@ export function setupWeatherModule() {
       weatherDiv.innerHTML = "❌ Error fetching weather data.";
     }
   });
+  async function displayWeatherData(forecastData, countryName) {
+    let forecastHTML = `<h3 class="country">${countryName}</h3>`;
 
-  function displayWeatherData(forecast, countryName) {
-    let forecastHTML = `<h3>${countryName}</h3>`;
-    for (let i = 0; i < 3; i++) {
-      const date = new Date(forecast.time[i]);
+    // Konvertera väderdata till en grupp per dag
+    const groupedByDay = forecastData.reduce((acc, data) => {
+      const date = new Date(data.time);
+      const dateString = date.toISOString().split("T")[0]; // Datum i formatet YYYY-MM-DD
+
+      if (!acc[dateString]) {
+        acc[dateString] = [];
+      }
+
+      acc[dateString].push(data);
+      return acc;
+    }, {});
+
+    let count = 0;
+    for (const dateString in groupedByDay) {
+      if (count >= 3) break; // Stopp när vi har visat tre dagar
+
+      const dailyData = groupedByDay[dateString][0]; // Välj den första posten för dagen
+      const date = new Date(dailyData.time);
       const dayOfWeek = date.toLocaleString("en-us", { weekday: "long" });
-      const maxTemp = forecast.temperature_2m_max[i];
-      const minTemp = forecast.temperature_2m_min[i];
-      const precipitation = forecast.precipitation_sum[i];
-      const windSpeed = forecast.windspeed_10m_max[i];
+      const temperature = dailyData.temperature;
+      const weatherCode = dailyData.weather_code;
+
+      let weatherIconURL = "";
+
+      try {
+        weatherIconURL = await fetchWeatherIcon(weatherCode);
+      } catch (error) {
+        console.error("Error fetching weather icon:", error);
+        weatherIconURL = "https://via.placeholder.com/50"; // Fallback-ikon
+      }
 
       forecastHTML += `
-        <div>
-          <strong>${dayOfWeek}</strong><br>
-          🌡️ Max: ${maxTemp}°C | Min: ${minTemp}°C<br>
-          💧 Precipitation: ${precipitation} mm<br>
-          💨 Wind: ${windSpeed} km/h<br>
-        </div>
-        <hr>
+        <section class="weather-section">
+          
+          <img src="${weatherIconURL}" alt="Weather icon">
+          <p class="day">${dayOfWeek}</p>
+          <p class="temp">${temperature}°C</p>
+        </section>
+        
       `;
+
+      count++;
+    }
+
+    if (count < 3) {
+      forecastHTML += "<p>❌ Not enough weather data available.</p>";
     }
 
     weatherDiv.innerHTML = forecastHTML;

@@ -120,7 +120,40 @@ footer {
   background: #f0f0f0;
 }
 #weather {
-  margin-top: 20px;
-  font-size: 20px;
   display: none;
 }
+.weather {
+  display: flex;
+  flex-direction: column;
+}
+.weather-section {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, auto);
+  margin: 10px;
+  border-radius: 10px;
+  justify-content: start;
+  align-items: center;
+  background-color: #a3a0a0c1;
+}
+.day {
+  grid-area: 1 / 2 / 2 / 4;
+  font-weight: 600;
+}
+.weather-section img {
+  grid-area: 1 / 1 / 3 / 2;
+}
+
+.temp {
+  background-color: #e8e6e6;
+  grid-area: 2 / 2 / 3 / 3;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.country {
+  text-align: center;
+}
+
+/* .weatherinfo {
+  grid-area: 2 / 3 / 3 / 4; 
+} */
