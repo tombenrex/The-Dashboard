@@ -1,6 +1,6 @@
 // api.js
 import { fetchData } from "../utils.js";
-import { weatherKey, backgroundImgKey } from "../key.js";
+import { weatherKey, backgroundImgKey } from "../../key.js";
 import { getRandomLocalImage } from "./background.js";
 
 let countries = [];
