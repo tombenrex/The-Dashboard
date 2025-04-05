@@ -4,7 +4,7 @@ import { fetchData } from "../utils.js";
 import { getRandomLocalImage } from "./background.js";
 
 let countries = [];
-const { weatherKey, backgroundImgKey } = CONFIG;
+
 // Fetch countries data
 export async function fetchCountries() {
   const url = "https://restcountries.com/v3.1/all";
@@ -28,7 +28,7 @@ export async function fetchWeather(countryName) {
 
   const [lat, lon] = country.latlng;
 
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}&units=metric`;
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${CONFIG.weatherKey}&units=metric`;
 
   const weatherData = await fetchData(weatherUrl);
 
@@ -53,7 +53,7 @@ export async function fetchBackground() {
   if (backgroundImgKey) {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/photos/random?query=nature&orientation=landscape&client_id=${backgroundImgKey}`
+        `https://api.unsplash.com/photos/random?query=nature&orientation=landscape&client_id=${CONFIG.backgroundImgKey}`
       );
       const data = await response.json();
 
