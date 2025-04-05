@@ -1,0 +1,33 @@
+env:
+BG_KEY: ${{secrets.BACKGROUNDIMGKEY}}
+
+env:
+W_KEY: ${{secrets.WEATHERKEY}}
+
+
+name: Build static site
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Skapa config.js med secret
+        run: |
+          echo "const CONFIG = {" > config.js
+          echo "  apiKey: \"${{ secrets.API_KEY }}\"" >> config.js
+          echo "};" >> config.js
+          echo "export default CONFIG;" >> config.js
+
+      - name: Lista filer (för demo)
+        run: ls -la
+
+      - name: Deploy (valfritt)
+        run: echo "Här kan du lägga in ett deploy-steg, t.ex. till Netlify, FTP eller annat"

@@ -1,10 +1,10 @@
 // api.js
+import CONFIG from "./config.js";
 import { fetchData } from "../utils.js";
-import { weatherKey, backgroundImgKey } from "../../key.js";
 import { getRandomLocalImage } from "./background.js";
 
 let countries = [];
-
+const { weatherKey, backgroundImgKey } = CONFIG;
 // Fetch countries data
 export async function fetchCountries() {
   const url = "https://restcountries.com/v3.1/all";
