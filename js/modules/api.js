@@ -1,5 +1,5 @@
 // api.js
-import CONFIG from "./../config.js";
+import CONFIG from "../../config.js";
 import { fetchData } from "../utils.js";
 import { getRandomLocalImage } from "./background.js";
 
