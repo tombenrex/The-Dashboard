@@ -2,14 +2,15 @@ name: Build static site
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BG_KEY: ${{ secrets.BACKGROUNDIMGKEY }}
-      W_KEY: ${{ secrets.WEATHERKEY }}
+      WEATHER_KEY: ${{ secrets.WEATHERKEY }}
+      BACKGROUND_KEY: ${{ secrets.BACKGROUNDIMGKEY }}
 
     steps:
       - name: Checkout repo
@@ -18,13 +19,13 @@ jobs:
       - name: Create config.js with secrets
         run: |
           echo "const CONFIG = {" > config.js
-          echo "  weatherKey: \"${{ secrets.WEATHERKEY }}\"," >> config.js
-          echo "  backgroundImgKey: \"${{ secrets.BACKGROUNDIMGKEY }}\"" >> config.js
+          echo "  weatherKey: \"${{ secrets.WEATHER_KEY }}\"," >> config.js
+          echo "  backgroundImgKey: \"${{ secrets.BACKGROUND_KEY }}\"" >> config.js
           echo "};" >> config.js
           echo "export default CONFIG;" >> config.js
 
       - name: List files (for demo)
         run: ls -la
 
-      - name: Deploy (optional)
-        run: echo "Deploy your site here (e.g., Netlify, FTP, etc.)"
+      - name: Deploy
+        run: echo "Deploy your site here (e.g., Netlify, Vercel, etc.)"

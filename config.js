@@ -1,6 +1,7 @@
+// config.js
 const CONFIG = {
-  weatherKey: "YOUR_OPENWEATHER_API_KEY",
-  backgroundImgKey: "YOUR_UNSPLASH_API_KEY",
+  weatherKey: import.meta.env.VITE_WEATHER_KEY,
+  backgroundImgKey: import.meta.env.VITE_BACKGROUND_KEY,
 };
 
 export default CONFIG;
